@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9b00d7b6-ec5a-4f2d-b5c7-1aa14d1497e9" name="Default Changelist" comment="" />
+    <list default="true" id="9b00d7b6-ec5a-4f2d-b5c7-1aa14d1497e9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,12 +19,13 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/E-Vengara" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1xyvZkCNysMxm3DWyBtkAVmxZNX" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/templates/shop" />
   </component>
@@ -73,7 +76,7 @@
       <updated>1631340199358</updated>
       <workItem from="1631340201001" duration="6628000" />
       <workItem from="1631350197051" duration="5040000" />
-      <workItem from="1631425575535" duration="5942000" />
+      <workItem from="1631425575535" duration="6416000" />
     </task>
     <servers />
   </component>

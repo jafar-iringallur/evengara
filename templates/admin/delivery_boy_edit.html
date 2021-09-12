@@ -1,0 +1,46 @@
+<html>
+
+<head>
+    <title>
+        Edit Delivery Boy
+    </title>
+</head>
+
+<body>
+    <table>
+  <form action="/adm_edit_delivery_boy_post" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="boyid" value="{{ val['boyid'] }}">
+        <tr>
+            Name: <input name="name" value="{{ val['name'] }}" type="text"><br>
+        </tr>
+        <tr>
+            Image : <img src="{{ val['image'] }}" style="width: 50px"> <br> <input name="img" type="file"><br>
+        </tr>
+
+        <tr>
+            Place : <input name="place" value="{{ val['place'] }}" type="text"><br>
+        </tr>
+        <tr>
+            Post : <input name="post" value="{{ val['post'] }}" type="text"><br>
+        </tr>
+        <tr>
+            Pin : <input name="pin" value="{{ val['pin'] }}" type="text"><br>
+        </tr>
+
+        <tr>
+            Contact : <input name="contact" value="{{ val['contact'] }}" type="text"><br>
+        </tr>
+        <tr>
+            Email : <input name="email" value="{{ val['email'] }}" type="email"><br>
+        </tr>
+        <tr>
+            Age : <input name="age" value="{{ val['age'] }}" type="text"><br>
+        </tr>
+        <tr>
+            <input type="submit" value="Update">
+        </tr>
+  </form>
+    </table>
+</body>
+
+</html>

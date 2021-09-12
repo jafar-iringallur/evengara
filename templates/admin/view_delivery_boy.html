@@ -1,0 +1,35 @@
+
+<html>
+    <head>
+    <title>
+             View Delivery Boys
+           </title>
+       </head>
+       <body>
+   <table border="1">
+   
+       <tr>
+           <th>Sl No</th>
+           <th>Image</th>
+           <th>Name</th>
+           <th>Address</th>
+           <th>Age</th>
+           <th>Email</th>
+           <th>Contact</th>
+           <th>Action</th>
+       </tr>
+      {% for i in val %}
+       <tr>
+        <td>{{ loop.index }}</td>
+           <td><img src="{{ i['image'] }}" style="width:50px"> </td>
+        <td>{{ i['name'] }}</td>
+           <td>{{ i['place'] }}<br>{{ i['post'] }}<br>{{ i['pin'] }}</td>
+        <td>{{ i['age'] }}</td>
+        <td>{{ i['email'] }}</td>
+        <td>{{ i['contact'] }}</td>
+        <td><a href="/adm_delivery_boy_edit/{{ i['boyid'] }}">Edit</a><br><a href="/adm_delete_delivery_boy/{{ i['boyid'] }}">Delete</a></td>
+               </tr>
+              {% endfor %}
+   </table>
+       </body>
+   </html>

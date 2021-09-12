@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Profile</title>
+</head>
+<body>
+<table>
+        <form action="/shop_register_post" method="post">
+            {% for i in data %}
+        <tr>
+            Name: <input name="name" type="text" value="{{ i['name'] }}"><br>
+        </tr>
+
+        <tr>
+           Address: : <input name="address" type="text" value="{{ i['address'] }}"><br>
+        </tr>
+
+        <tr>
+            Contact : <input name="contact" type="text" value="{{ i['contact'] }}"><br>
+        </tr>
+        <tr>
+            Email : <input name="email" type="email" value="{{ i['email'] }}"><br>
+        </tr>
+{% endfor %}
+
+            </form>
+    </table>
+</body>
+</html>

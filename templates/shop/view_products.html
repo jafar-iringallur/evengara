@@ -1,0 +1,43 @@
+
+<html>
+    <head>
+    <title>
+             View Products
+           </title>
+       </head>
+       <body>
+   <table border="1">
+    <tr>
+        <form action="/shop_search_product" method="post">
+        <input name="search" type="text">
+        <input type="submit" value="search">
+            </form>
+    </tr>
+       <tr>
+           <th>Sl No</th>
+           <th>Image</th>
+           <th>Name</th>
+           <th>Description</th>
+           <th>Made Date</th>
+           <th>Exp Date</th>
+           <th>Price</th>
+           <th>Category</th>
+           <th>Action</th>
+       </tr>
+      {% for i in val %}
+       <tr>
+        <td>{{ loop.index }}</td>
+           <td><img src="{{ i['image'] }}" style="width:50px"> </td>
+        <td>{{ i['name'] }}</td>
+           <td>{{ i['description'] }}</td>
+        <td>{{ i['madedate'] }}</td>
+        <td>{{ i['expdate'] }}</td>
+        <td>{{ i['price'] }}</td>
+        <td>{{ i['category'] }}</td>
+        <td><a href="/shop_edit_products/{{ i['prdid'] }}">Edit</a><br>
+        <a href="/shop_delete_products/{{ i['prdid'] }}">Delete</a></td>
+               </tr>
+              {% endfor %}
+   </table>
+       </body>
+   </html>

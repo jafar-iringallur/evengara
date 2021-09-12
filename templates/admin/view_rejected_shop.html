@@ -1,0 +1,30 @@
+<html>
+ <head>
+ <title>
+           Rejected Shop
+        </title>
+    </head>
+    <body>
+<table border="1">
+
+    <tr>
+        <th>Sl No</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Email</th>
+        <th>Contact</th>
+        <th></th>
+    </tr>
+{% for i in val %}
+    <tr>
+    <td>{{ loop.index }}</td>
+     <td>{{ i['name'] }}</td>
+     <td>{{ i['address'] }}</td>
+     <td>{{ i['email'] }}</td>
+     <td>{{ i['contact'] }}</td>
+     <td><a href="/adm_approve_rejected_shop/{{ i['loginid'] }}">Approve</a></td>
+            </tr>
+        {% endfor %}
+</table>
+    </body>
+</html>

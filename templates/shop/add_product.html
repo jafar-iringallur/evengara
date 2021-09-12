@@ -1,0 +1,48 @@
+<html>
+
+<head>
+    <title>
+        Add Product
+    </title>
+</head>
+
+<body>
+    <table>
+        <form action="/shop_add_product_post" method="post" enctype="multipart/form-data">
+        <tr>
+            Name: <input name="name" type="text"><br>
+        </tr>
+        <tr>
+            Image : <input name="img" type="file"><br>
+        </tr>
+ <tr>
+            Category : <select name="category">
+     {% for i in val  %}
+     <option value="{{ i['cat_id'] }}">{{ i['category'] }}</option>
+      {% endfor %}
+ </select><br>
+        </tr>
+        <tr>
+          Description : <textarea name="description"></textarea><br>
+        </tr>
+        <tr>
+           Made Date : <input name="made_date" type="date"><br>
+        </tr>
+        <tr>
+           Exp Date : <input name="exp_date" type="date"><br>
+        </tr>
+
+        <tr>
+            Price : <input name="price" type="text"><br>
+        </tr>
+
+
+        <tr>
+            <input type="submit" value="Add">
+        </tr>
+            </form>
+    </table>
+
+</body>
+
+</html>

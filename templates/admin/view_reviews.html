@@ -1,0 +1,32 @@
+
+<html>
+    <head>
+    <title>
+             View Reviews
+           </title>
+       </head>
+       <body>
+   <table border="1">
+   
+       <tr>
+           <th>Sl No</th>
+           <th>Review</th>
+           <th>Rating</th>
+           <th>Username</th>
+           <th>Shop</th>
+           <th>Date</th>
+           
+       </tr>
+      {% for i in val %}
+       <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ i['review'] }}</td>
+           <td>{{ i['rating'] }}</td>
+        <td>{{ i['cname'] }}</td>
+           <td>{{ i['shopname'] }}</td>
+        <td>{{ i['date'] }}</td>
+              </tr>
+          {% endfor %}
+   </table>
+       </body>
+   </html>

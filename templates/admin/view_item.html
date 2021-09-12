@@ -1,0 +1,32 @@
+<html>
+    <head>
+    <title>
+             View Items
+           </title>
+       </head>
+       <body>
+   <table border="1">
+   
+       <tr>
+           <th>Sl No</th>
+           <th>Product</th>
+           <th>Quantity</th>
+           <th>Price</th>
+          <th>Shop</th>
+          
+       </tr>
+   
+       {% for i in val %}
+       <tr>
+      <td>{{ loop.index }}</td>
+        <td>{{ i['name'] }}</td>
+        <td>{{ i['quantity'] }}</td>
+        <td>{{ i['price'] }}</td>
+       <td>{{ i['shop_name'] }}</td>
+
+              </tr>
+            {% endfor %}
+            
+   </table>
+       </body>
+   </html>

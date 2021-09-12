@@ -1,0 +1,35 @@
+<html>
+ <head>
+ <title>
+           Accepted Shop
+        </title>
+    </head>
+    <body>
+<table border="1">
+<tr>
+    <form action="/adm_search_shop" method="post">
+    <input name="search" type="text">
+    <input type="submit" value="search">
+        </form>
+</tr>
+    <tr>
+        <th>Sl No</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Email</th>
+        <th>Contact</th>
+        <th></th>
+    </tr>
+{% for i in val %}
+    <tr>
+     <td>{{ loop.index }}</td>
+        <td><a href="/adm_view_shop/{{ i['shopid'] }}">{{ i['name'] }}</a></td>
+     <td>{{ i['address'] }}</td>
+     <td>{{ i['email'] }}</td>
+     <td>{{ i['contact'] }}</td>
+     <td><a href="/chat">Chat</a></td>
+            </tr>
+          {% endfor %}
+</table>
+    </body>
+</html>

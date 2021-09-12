@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Shop</title>
+</head>
+<body>
+<center>
+<div style="border: 1px solid black;text-align:center;margin:auto">
+<h1>{{ val['name'] }}</h1>
+{{ val['address'] }}<br><br>
+Ph: {{ val['contact'] }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Email: {{ val['email'] }}
+    </div>
+    </center>
+<br>
+<b>
+   <h3> Products</h3>
+</b>
+<table border="1">
+
+       <tr>
+           <th>Sl No</th>
+           <th>Image</th>
+           <th>Name</th>
+           <th>Description</th>
+           <th>Made Date</th>
+           <th>Exp Date</th>
+           <th>Price</th>
+           <th>Category</th>
+
+       </tr>
+      {% for i in data %}
+       <tr>
+        <td>{{ loop.index }}</td>
+           <td><img src="{{ i['image'] }}" style="width:50px"> </td>
+        <td>{{ i['name'] }}</td>
+           <td>{{ i['description'] }}</td>
+        <td>{{ i['madedate'] }}</td>
+        <td>{{ i['expdate'] }}</td>
+        <td>{{ i['price'] }}</td>
+        <td>{{ i['category'] }}</td>
+
+               </tr>
+              {% endfor %}
+   </table>
+<b>
+   <h3> Reviews</h3>
+</b>
+ <table border="1">
+
+       <tr>
+           <th>Sl No</th>
+           <th>Review</th>
+           <th>Rating</th>
+           <th>Username</th>
+
+           <th>Date</th>
+
+       </tr>
+      {% for i in rew %}
+       <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ i['review'] }}</td>
+           <td>{{ i['rating'] }}</td>
+        <td>{{ i['cname'] }}</td>
+
+        <td>{{ i['date'] }}</td>
+              </tr>
+          {% endfor %}
+   </table>
+</body>
+</html>

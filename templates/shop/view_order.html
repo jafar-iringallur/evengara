@@ -1,0 +1,32 @@
+<html>
+    <head>
+    <title>
+             View Order
+           </title>
+       </head>
+       <body>
+   <table border="1">
+   
+       <tr>
+           <th>Sl No</th>
+           <th>Date</th>
+           <th>Username</th>
+
+           <th>Status</th>
+
+       </tr>
+    {% for i in val %}
+       <tr>
+
+        <td>{{ loop.index }}</td>
+        <td>{{ i['date'] }}</td>
+        <td>{{ i['cname'] }}</td>
+        <td>{{ i['status'] }}</td>
+
+        <td><a href="/shop_view_item/{{ i['ordermainid'] }}">View Items</a></td>
+              </tr>
+       {% endfor %}
+            
+   </table>
+       </body>
+   </html>

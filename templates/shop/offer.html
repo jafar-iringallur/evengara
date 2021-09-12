@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Offer</title>
+</head>
+<body>
+ <table>
+        <form action="/shop_add_offer_post" method="post">
+        <tr>
+            Offer Name: <input name="name" type="text"><br>
+        </tr>
+
+ <tr>
+            Product : <select name="product">
+     {% for i in val  %}
+     <option value="{{ i['prdid'] }}">{{ i['name'] }}</option>
+      {% endfor %}
+ </select><br>
+        </tr>
+        <tr>
+          Description : <textarea name="description"></textarea><br>
+        </tr>
+        <tr>
+           Start Date : <input name="start_date" type="date"><br>
+        </tr>
+        <tr>
+           End Date : <input name="end_date" type="date"><br>
+        </tr>
+
+
+
+        <tr>
+            <input type="submit" value="Add">
+        </tr>
+            </form>
+    </table>
+
+</body>
+</html>

@@ -161,12 +161,12 @@ def adm_search_customer():
     res=d.select(qry)
     return render_template("admin/view_and_search_customer.html", val=res)
 
-@app.route('/adm_view_reviews')
-def adm_view_reviews():
-    r = Db();
-    qry = "SELECT review.*,customer.name AS cname,shop.name as shopname FROM review,customer,shop WHERE customer.loginid = review.userid AND shop.loginid = review.shopid"
-    res = r.select(qry)
-    return render_template("admin/view_reviews.html",val=res)
+# @app.route('/adm_view_reviews')
+# def adm_view_reviews():
+#     r = Db();
+#     qry = "SELECT review.*,customer.name AS cname,shop.name as shopname FROM review,customer,shop WHERE customer.loginid = review.userid AND shop.loginid = review.shopid"
+#     res = r.select(qry)
+#     return render_template("admin/view_reviews.html",val=res)
 
 
 

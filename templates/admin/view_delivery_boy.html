@@ -17,6 +17,7 @@
            <th>Email</th>
            <th>Contact</th>
            <th>Action</th>
+           <th>chat</th>
        </tr>
       {% for i in val %}
        <tr>
@@ -28,7 +29,9 @@
         <td>{{ i['email'] }}</td>
         <td>{{ i['contact'] }}</td>
         <td><a href="/adm_delivery_boy_edit/{{ i['boyid'] }}">Edit</a><br><a href="/adm_delete_delivery_boy/{{ i['boyid'] }}">Delete</a></td>
+            <td><a href="/adm_chat_with_delivery_boy/{{ i['loginid'] }}">chat</a></td>
                </tr>
+
               {% endfor %}
    </table>
        </body>

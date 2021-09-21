@@ -3,7 +3,7 @@
     <center><h4><i>CHAT WITH ADMIN</i></h4></center><br>
 <script src="/static/jquery.min.js"></script>
     <div class="col-md-12">
-<input type="hidden" id="hid" value="{{ toid }}">
+<input type="hidden" id="hid" name="hid" value="{{ toid }}">
  <table width="600" align="center" class="table-bordered">
     <tr>
       <th width="92">Message</th>
@@ -31,7 +31,7 @@
             $.ajax({
                 url: '/emp_chat_chk',
                 type: 'post',
-                data: {},
+                data: {toid:toid},
                 success: function (response) {
                     console.log(response);
                     $("#tbl_msg").empty();

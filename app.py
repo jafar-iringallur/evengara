@@ -195,7 +195,7 @@ def adm_change_pass_post():
 @app.route('/')
 def adm_login():
 
-    return render_template("admin/login.html")
+    return render_template("sign-in.html")
 
 
 @app.route('/adm_login_post',methods=['post'])
@@ -209,7 +209,7 @@ def adm_login_post():
     if res != '':
         type=res['usertype']
         if type == "admin":
-            return render_template("admin/home.html")
+            return render_template("admin/index.html")
         elif type == "shop":
 
             session['shop_id'] = res['loginid']
@@ -467,30 +467,150 @@ def shop_view_item(id):
     qry="select ordersub.*,products.* from ordersub,products where ordersub.ordermainid='"+id+"' and ordersub.shopid ='"+str(session['shop_id'])+"' AND products.prdid=ordersub.productid"
     res=d.select(qry)
     return render_template("shop/view_item.html",val=res)
+
+
+#======================= admin chat with shop====================================================
+@app.route("/adm_chat/<id>")
+def adm_chat(id):
+    d=Db()
+    session['toid']=id
+    qry="select * from shop where loginid='"+id+"'"
+    res=d.selectOne(qry)
+    return render_template("admin/chat.html",val=res,toid=session['toid'])
+
+@app.route("/adm_chat_chk",methods=['post'])        # refresh messages chatlist
+def adm_chat_chk():
+    toid=request.form['toid']
+    qry = "SELECT DATE,message,senderid FROM chat WHERE (senderid='" +toid+ "' AND reciverid=1) OR ((senderid=1 AND reciverid='" +toid+ "')) ORDER BY chatid DESC"
+    c=Db()
+
+    res = c.select(qry)
+
+    return jsonify(res)
+
+
+
+@app.route("/adm_chat_post",methods=['POST'])
+def adm_chat_post():
+    id=request.form['hid']
+    myloginid=1
+    ta=request.form["ta"]
+    qry="insert into chat(message,date,time,senderid,reciverid,type) values('"+ta+"',CURDATE(),CURTIME(),'"+str(myloginid)+"','"+str(id)+"','shop')"
+    d=Db()
+    d.insert(qry)
+    qry = "select * from shop where loginid='" + id + "'"
+    res = d.selectOne(qry)
+    return render_template('admin/chat.html',val=res,toid=id)
+
+
+
+#=====================================shop to admin===================================================
+
 @app.route("/chat")
 def chat():
-    return render_template("shop/chat.html")
+    toid=1
+    return render_template("shop/chat.html",toid=toid)
 
 
 @app.route("/emp_chat_chk",methods=['post'])        # refresh messages chatlist
 def emp_chat_chk():
 
-    qry = "SELECT DATE,message,senderid FROM chat WHERE (senderid='" + str(
-        session['shop_id']) + "' AND reciverid=1) OR ((senderid=1 AND reciverid='" + str(
-        session['shop_id']) + "')) ORDER BY chatid DESC"
+    qry = "SELECT DATE,message,senderid FROM chat WHERE (senderid='" + str(session['shop_id']) + "' AND reciverid=1) OR ((senderid=1 AND reciverid='" + str(session['shop_id']) + "')) ORDER BY chatid DESC"
     c = Db()
+
     res = c.select(qry)
     return jsonify(res)
 
 
 @app.route("/emp_chat_post",methods=['POST'])
 def emp_chat_post():
-    id=1
+    id=request.form['hid']
     ta=request.form["ta"]
     qry="insert into chat(message,date,time,senderid,reciverid,type) values('"+ta+"',CURDATE(),CURTIME(),'"+str(session['shop_id'])+"','"+str(id)+"','shop')"
     d=Db()
     d.insert(qry)
-    return render_template('shop/chat.html')
+    return render_template('shop/chat.html',toid=id)
+
+
+
+#======================= admin chat with delivery boy====================================================
+@app.route("/adm_chat_with_delivery_boy/<id>")
+def adm_chat_with_delivery_boy(id):
+    d=Db()
+    session['toid']=id
+    qry="select * from deliveryboy where loginid='"+id+"'"
+    res=d.selectOne(qry)
+    return render_template("admin/chat_delivery_boy.html",val=res,toid=session['toid'])
+
+@app.route("/adm_chat_deliveryboy_chk",methods=['post'])        # refresh messages chatlist
+def adm_chat_deliveryboy_chk():
+    toid=request.form['toid']
+    qry = "SELECT DATE,message,senderid FROM chat WHERE (senderid='" +toid+ "' AND reciverid=1) OR ((senderid=1 AND reciverid='" +toid+ "')) AND type='admin' ORDER BY chatid DESC"
+    c=Db()
+
+    res = c.select(qry)
+
+    return jsonify(res)
+
+
+
+@app.route("/adm_chat_deliveryboy_post",methods=['POST'])
+def adm_chat_deliveryboy_post():
+    id=request.form['hid']
+    myloginid=1
+    ta=request.form["ta"]
+    qry="insert into chat(message,date,time,senderid,reciverid,type) values('"+ta+"',CURDATE(),CURTIME(),'"+str(myloginid)+"','"+str(id)+"','admin')"
+    d=Db()
+    d.insert(qry)
+    qry = "select * from shop where loginid='" + id + "'"
+    res = d.selectOne(qry)
+    return render_template('admin/chat.html',val=res,toid=id)
+
+
+#=====================================shop to deliveryboy===================================================
+@app.route("/shop_virew_delivery_boy")
+def view_delivery_boy():
+    r = Db()
+    qry = "select * from deliveryboy"
+    res = r.select(qry)
+    return render_template("shop/view_delivery_boy.html", val=res)
+
+@app.route("/shop_chat_with_delivery_boy/<id>")
+def shop_chat_with_delivery_boy(id):
+    session['toid']=id
+    r = Db()
+    qry = "select * from deliveryboy WHERE loginid='"+id+"'"
+    res = r.selectOne(qry)
+    return render_template("shop/chat_delivery_boy.html",val=res,toid=id)
+
+
+@app.route("/shop_chat_deliveryboy_chk",methods=['post'])        # refresh messages chatlist
+def shop_chat_deliveryboy_chk():
+    toid=request.form['toid']
+
+    qry = "SELECT DATE,message,senderid FROM chat WHERE (senderid='" + str(session['shop_id']) + "' AND reciverid='"+toid+"') OR ((senderid='"+toid+"' AND reciverid='" + str(session['shop_id']) + "')) AND type='shop' ORDER BY chatid DESC"
+    c = Db()
+
+    res = c.select(qry)
+    return jsonify(res)
+
+
+@app.route("/shop_chat_delivery_boy_post",methods=['POST'])
+def shop_chat_delivery_boy_post():
+    id=request.form['hid']
+    ta=request.form["ta"]
+
+    qry="insert into chat(message,date,time,senderid,reciverid,type) values('"+ta+"',CURDATE(),CURTIME(),'"+str(session['shop_id'])+"','"+str(id)+"','shop')"
+    d=Db()
+    d.insert(qry)
+    qryy= "select * from deliveryboy WHERE loginid='" + id + "'"
+    res = d.selectOne(qryy)
+
+    return render_template('shop/chat_delivery_boy.html',toid=id,val=res)
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

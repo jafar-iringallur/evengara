@@ -1,12 +1,6 @@
-
-<html>
-    <head>
-    <title>
-             View Reviews
-           </title>
-       </head>
-       <body>
-   <table border="1">
+   {% extends "admin/index.html" %}
+{% block body %}
+   <table class="table table-bordered">
    
        <tr>
            <th>Sl No</th>
@@ -28,5 +22,4 @@
               </tr>
           {% endfor %}
    </table>
-       </body>
-   </html>
+   {% endblock %}

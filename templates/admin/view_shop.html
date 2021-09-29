@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>View Shop</title>
-</head>
-<body>
+   {% extends "admin/index.html" %}
+{% block body %}
+
 <center>
 <div style="border: 1px solid black;text-align:center;margin:auto">
 <h1>{{ val['name'] }}</h1>
@@ -17,7 +13,7 @@ Email: {{ val['email'] }}
 <b>
    <h3> Products</h3>
 </b>
-<table border="1">
+   <table class="table table-bordered">
 
        <tr>
            <th>Sl No</th>
@@ -47,7 +43,7 @@ Email: {{ val['email'] }}
 <b>
    <h3> Reviews</h3>
 </b>
- <table border="1">
+   <table class="table table-bordered">
 
        <tr>
            <th>Sl No</th>
@@ -69,5 +65,4 @@ Email: {{ val['email'] }}
               </tr>
           {% endfor %}
    </table>
-</body>
-</html>
+{% endblock %}

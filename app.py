@@ -5,7 +5,7 @@ app.secret_key="abcc"
 
 @app.route('/admin')
 def admin():
-    return render_template("admin/home.html")
+    return render_template("admin/index.html")
 
 
 @app.route('/adm_add_delivery_boy')
@@ -30,7 +30,7 @@ def adm_add_delivery_boy_post():
 
     qry = "insert into deliveryboy(name,place,post,pin,age,email,contact,image,loginid)values('" + name + "','" + place + "','" + post + "','" + pin + "','" + age + "','" + email + "','" + contact + "','" + path + "','"+str(res1)+"')"
     res = d.insert(qry)
-    return adm_add_delivery_boy()
+    return adm_view_delivery_boy()
 
 @app.route('/adm_view_delivery_boy')
 def adm_view_delivery_boy():
@@ -145,7 +145,8 @@ def adm_approve_rejected_shop(id):
     r = Db()
     qry = "UPDATE login SET usertype= 'shop' where loginid= '" + id + "'"
     res = r.update(qry)
-    return admin()
+    return adm_view_accepted_shop()
+
 @app.route('/adm_view_and_search_customer')
 def adm_view_and_search_customer():
     r=Db();
@@ -190,7 +191,7 @@ def adm_change_pass_post():
             return ("password not match")
     else:
         return ("please enter correct password")
-    return render_template("admin/home.html")
+    return render_template("admin/index.html")
 
 @app.route('/')
 def adm_login():
@@ -213,7 +214,7 @@ def adm_login_post():
         elif type == "shop":
 
             session['shop_id'] = res['loginid']
-            return render_template("shop/home.html")
+            return render_template("shop/index.html")
     else:
         return 'invalid username or password'
 
@@ -236,11 +237,11 @@ def adm_view_item(id):
 
 @app.route('/shop')
 def shop():
-    return render_template("shop/home.html")
+    return render_template("shop/index.html")
 
 @app.route('/shop_register')
 def adm_shop_register():
-    return render_template("shop/register.html")
+    return render_template("register.html")
 
 @app.route('/shop_register_post',methods=['post'])
 def shop_register_post():
@@ -277,7 +278,14 @@ def shop_change_pass_post():
             return ("password not match")
     else:
         return ("please enter correct password")
-    return render_template("shop/home.html")
+    return render_template("shop/index.html")
+
+@app.route('/shop_view_category')
+def shop_view_category():
+    r=Db();
+    qry = "SELECT * FROM category"
+    res=r.select(qry)
+    return render_template("shop/view_category.html",val=res)
 
 @app.route('/shop_add_category')
 def shop_add_category():
@@ -289,7 +297,7 @@ def shop_add_category_post():
     d=Db()
     qry= "insert into category(category)values('"+category+"')"
     res= d.insert(qry)
-    return shop_add_category()
+    return shop_view_category()
 
 @app.route('/shop_add_product')
 def shop_add_product():
@@ -313,7 +321,7 @@ def shop_add_product_post():
     d=Db()
     qry= "insert into products(name,image,description,madedate,expdate,price,categoryid,shopid)values('"+name+"','"+path+"','"+description+"','"+made_date+"','"+exp_date+"','"+price+"','"+category+"','"+str(session['shop_id']) +"')"
     res= d.insert(qry)
-    return shop_add_product()
+    return shop_view_products()
 
 @app.route('/shop_view_products')
 def shop_view_products():
@@ -435,7 +443,7 @@ def shop_add_offer_post():
     qry = "insert into offer(offername,description,startdate,enddate,productid,shopid)values('" + name + "','" + description + "','" + start_date + "','" + end_date + "','" + product + "','" + str(
         session['shop_id']) + "')"
     res = d.insert(qry)
-    return shop_add_offer()
+    return shop_view_offer()
 
 @app.route('/shop_view_offer')
 def shop_view_offer():

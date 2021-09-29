@@ -1,51 +1,63 @@
-<html>
-
-<head>
-    <title>
-        Edit Product
-    </title>
-</head>
-
-<body>
-    <table>
+   {% extends "shop/index.html" %}
+{% block body %}
+   <table class="table table-bordered">
         <form action="/shop_edit_product_post" method="post" enctype="multipart/form-data">
         <input type="hidden" name="id" value="{{ val['prdid'] }}">
         <tr>
-            Name: <input name="name" type="text" value="{{ val['name'] }}"><br>
+            <td>
+                  Name: <input name="name" type="text" value="{{ val['name'] }}" class="form-control" required>
+            </td>
+
         </tr>
         <tr>
+<td>
+    Image : <img src="{{ val['image'] }}" width="100"><br>
+            <input name="img" type="file" class="form-control">
+</td>
 
-            Image : <img src="{{ val['image'] }}" width="100"><br>
-            <input name="img" type="file"><br>
         </tr>
  <tr>
-            Category : <select name="category">
+         <td>
+             Category : <select name="category" class="form-control" required>
      {% for i in val2  %}
      <option value="{{ i['cat_id'] }}" {% if i['cat_id'] == val['categoryid'] %} selected {% endif %}>{{ i['category'] }}</option>
       {% endfor %}
- </select><br>
+ </select>
+         </td>
         </tr>
         <tr>
-          Description : <textarea name="description" value="">{{ val['description'] }}</textarea><br>
-        </tr>
+            <td>
+            Description : <textarea name="description" value="" class="form-control" required>{{ val['description'] }}</textarea>
+
+            </td>
+           </tr>
         <tr>
-           Made Date : <input name="made_date" type="date" value="{{ val['madedate'] }}"><br>
-        </tr>
+            <td>
+                Made Date : <input name="made_date" type="date" value="{{ val['madedate'] }}" class="form-control" required>
+
+            </td>
+         </tr>
         <tr>
-           Exp Date : <input name="exp_date" type="date" value="{{ val['expdate'] }}"><br>
-        </tr>
+            <td>
+                 Exp Date : <input name="exp_date" type="date" value="{{ val['expdate'] }}" class="form-control" required>
+
+            </td>
+         </tr>
 
         <tr>
-            Price : <input name="price" type="text" value="{{ val['price'] }}"><br>
+            <td>
+                     Price : <input name="price" type="text" value="{{ val['price'] }}" class="form-control" required>
+            </td>
+
         </tr>
 
 
         <tr>
-            <input type="submit" value="Update">
+            <td>
+                <input type="submit" value="Update" class="btn btn-primary">
+            </td>
+
         </tr>
             </form>
     </table>
-
-</body>
-
-</html>
+{% endblock %}

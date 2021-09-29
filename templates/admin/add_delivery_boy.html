@@ -1,46 +1,64 @@
-<html>
+   {% extends "admin/index.html" %}
+{% block body %}
 
-<head>
-    <title>
-        Add Delivery Boy
-    </title>
-</head>
-
-<body>
-    <table>
         <form action="/adm_add_delivery_boy_post" method="post" enctype="multipart/form-data">
+           <table class="table table-bordered">
         <tr>
-            Name: <input name="name" type="text"><br>
+          <td>
+              Name: <input name="name" type="text" class="form-control" required>
+          </td>
         </tr>
         <tr>
-            Image : <input name="img" type="file"><br>
+            <td>
+                Image : <input name="img" type="file" class="form-control" required>
+            </td>
+
         </tr>
 
         <tr>
-            Place : <input name="place" type="text"><br>
+           <td>
+                 Place : <input name="place" type="text" class="form-control" required>
+           </td>
+
         </tr>
         <tr>
-            Post : <input name="post" type="text"><br>
+            <td>
+              Post : <input name="post" type="text" class="form-control" required>
+            </td>
+
         </tr>
         <tr>
-            Pin : <input name="pin" type="text"><br>
+            <td>
+                 Pin : <input name="pin" type="text" class="form-control" required>
+            </td>
+
         </tr>
 
         <tr>
-            Contact : <input name="contact" type="text"><br>
+            <td>
+              Contact : <input name="contact"  pattern="[0-9]{10}"  type="text" class="form-control" required>
+            </td>
+
         </tr>
         <tr>
-            Email : <input name="email" type="email"><br>
+            <td>
+                  Email : <input name="email" type="email" class="form-control" required>
+            </td>
+
         </tr>
         <tr>
-            Age : <input name="age" type="text"><br>
+            <td>
+                  Age : <input name="age" type="text" class="form-control" required>
+            </td>
+
         </tr>
         <tr>
-            <input type="submit" value="Add">
+            <td>
+                  <input type="submit" value="Add" class="btn btn-primary">
+            </td>
+
         </tr>
+                   </table>
             </form>
-    </table>
 
-</body>
-
-</html>
+{% endblock %}

@@ -1,9 +1,6 @@
-<html>
- <head><title>
-          Products
-        </title></head>
-    <body>
-<table border="1">
+   {% extends "admin/index.html" %}
+{% block body %}
+   <table class="table table-bordered">
 <tr>
         <th>Sl No</th>
         <th>Name</th>
@@ -24,5 +21,4 @@
             </tr>
          
 </table>
-    </body>
-</html>
+ {% endblock %}

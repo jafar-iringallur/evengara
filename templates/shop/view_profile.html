@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>View Profile</title>
-</head>
-<body>
-<table>
+  {% extends "shop/index.html" %}
+{% block body %}
+   <table class="table table-bordered">
         <form action="/shop_register_post" method="post">
             {% for i in data %}
         <tr>
@@ -26,5 +21,4 @@
 
             </form>
     </table>
-</body>
-</html>
+{% endblock %}

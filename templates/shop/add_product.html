@@ -1,48 +1,62 @@
-<html>
-
-<head>
-    <title>
-        Add Product
-    </title>
-</head>
-
-<body>
-    <table>
+   {% extends "shop/index.html" %}
+{% block body %}
+   <table class="table table-bordered">
         <form action="/shop_add_product_post" method="post" enctype="multipart/form-data">
         <tr>
-            Name: <input name="name" type="text"><br>
+            <td>
+                  Name: <input name="name" type="text" class="form-control" required>
+            </td>
+
         </tr>
         <tr>
-            Image : <input name="img" type="file"><br>
+             <td>
+                    Image : <input name="img" type="file" class="form-control" required>
+            </td>
+
         </tr>
  <tr>
-            Category : <select name="category">
+  <td>
+               Category : <select name="category" class="form-control" required>
      {% for i in val  %}
      <option value="{{ i['cat_id'] }}">{{ i['category'] }}</option>
       {% endfor %}
- </select><br>
+ </select>
+            </td>
+
         </tr>
         <tr>
-          Description : <textarea name="description"></textarea><br>
+            <td>
+                Description : <textarea name="description" class="form-control" required></textarea>
+            </td>
+
         </tr>
         <tr>
-           Made Date : <input name="made_date" type="date"><br>
+            <td>
+                 Made Date : <input name="made_date" type="date" class="form-control" required>
+            </td>
+
         </tr>
         <tr>
-           Exp Date : <input name="exp_date" type="date"><br>
+            <td>
+                  Exp Date : <input name="exp_date" type="date" class="form-control" required>
+            </td>
+
         </tr>
 
         <tr>
-            Price : <input name="price" type="text"><br>
+            <td>
+                Price : <input name="price" type="text" class="form-control" required>
+            </td>
+
         </tr>
 
 
         <tr>
-            <input type="submit" value="Add">
+            <td>
+                 <input type="submit" value="Add" class="btn btn-primary">
+            </td>
+
         </tr>
             </form>
     </table>
-
-</body>
-
-</html>
+{% endblock %}

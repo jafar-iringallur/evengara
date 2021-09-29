@@ -1,40 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Offer</title>
-</head>
-<body>
- <table>
+  {% extends "shop/index.html" %}
+{% block body %}
+   <table class="table table-bordered">
         <form action="/shop_add_offer_post" method="post">
         <tr>
-            Offer Name: <input name="name" type="text"><br>
+            <td>
+                Offer Name: <input name="name" type="text" class="form-control" required>
+            </td>
+
         </tr>
 
  <tr>
-            Product : <select name="product">
+           <td>
+             Product : <select name="product" class="form-control" required>
      {% for i in val  %}
      <option value="{{ i['prdid'] }}">{{ i['name'] }}</option>
       {% endfor %}
- </select><br>
+ </select>
+           </td>
         </tr>
         <tr>
-          Description : <textarea name="description"></textarea><br>
+            <td>
+              Description : <textarea name="description" class="form-control" required></textarea>
+            </td>
+
         </tr>
         <tr>
-           Start Date : <input name="start_date" type="date"><br>
+            <td>
+               Start Date : <input name="start_date" type="date" class="form-control" required>
+            </td>
+
         </tr>
         <tr>
-           End Date : <input name="end_date" type="date"><br>
+            <td>
+                End Date : <input name="end_date" type="date" class="form-control" required>
+            </td>
+
         </tr>
 
 
 
         <tr>
-            <input type="submit" value="Add">
+            <td>
+             <input type="submit" value="Add" class="btn btn-primary">
+            </td>
+
         </tr>
             </form>
     </table>
-
-</body>
-</html>
+{% endblock %}

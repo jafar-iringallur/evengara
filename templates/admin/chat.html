@@ -1,3 +1,5 @@
+   {% extends "admin/index.html" %}
+{% block body %}
 
 <form id="form1" name="form1" method="post" action="/adm_chat_post">
     <center><h4><i>CHAT WITH {{ val['name'] }}</i></h4></center><br>
@@ -61,3 +63,4 @@
     });
 </script>
 </form>
+{% endblock %}

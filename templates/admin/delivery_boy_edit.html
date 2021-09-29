@@ -1,46 +1,66 @@
-<html>
+   {% extends "admin/index.html" %}
+{% block body %}
 
-<head>
-    <title>
-        Edit Delivery Boy
-    </title>
-</head>
-
-<body>
-    <table>
   <form action="/adm_edit_delivery_boy_post" method="post" enctype="multipart/form-data">
+   <table class="table table-bordered">
       <input type="hidden" name="boyid" value="{{ val['boyid'] }}">
         <tr>
-            Name: <input name="name" value="{{ val['name'] }}" type="text"><br>
+            <td>
+                 Name: <input name="name" value="{{ val['name'] }}" type="text" class="form-control" required>
+            </td>
+
         </tr>
         <tr>
-            Image : <img src="{{ val['image'] }}" style="width: 50px"> <br> <input name="img" type="file"><br>
+             <td>
+                   Image : <img src="{{ val['image'] }}" style="width: 50px"> <br> <input name="img" type="file" class="form-control">
+            </td>
+
         </tr>
 
         <tr>
-            Place : <input name="place" value="{{ val['place'] }}" type="text"><br>
+             <td>
+                Place : <input name="place" value="{{ val['place'] }}" type="text" class="form-control" required>
+            </td>
+
         </tr>
         <tr>
-            Post : <input name="post" value="{{ val['post'] }}" type="text"><br>
+             <td>
+                 Post : <input name="post" value="{{ val['post'] }}" type="text" class="form-control" required>
+            </td>
+
         </tr>
         <tr>
-            Pin : <input name="pin" value="{{ val['pin'] }}" type="text"><br>
+             <td>
+                   Pin : <input name="pin" value="{{ val['pin'] }}" type="text" class="form-control" required>
+            </td>
+
         </tr>
 
         <tr>
-            Contact : <input name="contact" value="{{ val['contact'] }}" type="text"><br>
+             <td>
+                   Contact : <input name="contact" value="{{ val['contact'] }}" type="text" class="form-control" required>
+            </td>
+
         </tr>
         <tr>
-            Email : <input name="email" value="{{ val['email'] }}" type="email"><br>
+             <td>
+                  Email : <input name="email" value="{{ val['email'] }}" type="email" class="form-control" required>
+            </td>
+
         </tr>
         <tr>
-            Age : <input name="age" value="{{ val['age'] }}" type="text"><br>
+             <td>
+                   Age : <input name="age" value="{{ val['age'] }}" type="text" class="form-control" required>
+            </td>
+
         </tr>
         <tr>
-            <input type="submit" value="Update">
+             <td>
+                 <input type="submit" value="Update" class="btn btn-success">
+            </td>
+
         </tr>
-  </form>
+
     </table>
-</body>
-
-</html>
+    </form>
+       {% endblock %}

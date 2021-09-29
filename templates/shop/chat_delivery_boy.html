@@ -1,3 +1,5 @@
+  {% extends "shop/index.html" %}
+{% block body %}
 
 <form id="form1" name="form1" method="post" action="/shop_chat_delivery_boy_post">
     <center><h4><i>CHAT WITH {{ val['name'] }}</i></h4></center><br>
@@ -61,3 +63,4 @@
     });
 </script>
 </form>
+{% endblock %}

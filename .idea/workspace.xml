@@ -2,40 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9b00d7b6-ec5a-4f2d-b5c7-1aa14d1497e9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/register.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/shop/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/shop/view_category.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/add_delivery_boy.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/add_delivery_boy.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/change_password.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/change_password.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/chat.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/chat.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/chat_delivery_boy.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/chat_delivery_boy.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/delivery_boy_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/delivery_boy_edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/view_accepted_shop.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/view_accepted_shop.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/view_and_search_customer.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/view_and_search_customer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/view_delivery_boy.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/view_delivery_boy.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/view_item.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/view_item.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/view_new_shop.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/view_new_shop.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/view_order.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/view_order.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/view_product.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/view_product.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/view_rejected_shop.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/view_rejected_shop.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/view_reviews.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/view_reviews.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/view_shop.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/view_shop.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/shop/add_category.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shop/add_category.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/shop/add_product.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shop/add_product.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/shop/chat.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shop/chat.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/shop/chat_delivery_boy.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shop/chat_delivery_boy.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/shop/edit_product.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shop/edit_product.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/shop/offer.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shop/offer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/shop/view_item.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shop/view_item.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/shop/view_offer.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shop/view_offer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/shop/view_order.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shop/view_order.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/shop/view_products.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shop/view_products.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/shop/change_password.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shop/change_password.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/shop/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shop/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/shop/view_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shop/view_profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/shop/view_review.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shop/view_review.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/sign-in.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sign-in.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -119,7 +89,8 @@
       <workItem from="1632282428693" duration="412000" />
       <workItem from="1632287508748" duration="1793000" />
       <workItem from="1632651799443" duration="777000" />
-      <workItem from="1632890904324" duration="16265000" />
+      <workItem from="1632890904324" duration="16531000" />
+      <workItem from="1632975239464" duration="4651000" />
     </task>
     <servers />
   </component>
@@ -140,6 +111,6 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/evengara$evengara.coverage" NAME="evengara Coverage Results" MODIFIED="1632909714101" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/evengara$evengara.coverage" NAME="evengara Coverage Results" MODIFIED="1632979958495" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

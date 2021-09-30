@@ -4,18 +4,30 @@
         <form action="/shop_register_post" method="post">
             {% for i in data %}
         <tr>
-            Name: <input name="name" type="text" value="{{ i['name'] }}"><br>
+        <td>
+               Name: <input name="name" type="text" value="{{ i['name'] }}" class="form-control">
+        </td>
+
         </tr>
 
         <tr>
-           Address: : <input name="address" type="text" value="{{ i['address'] }}"><br>
+        <td>
+            Address: : <input name="address" type="text" value="{{ i['address'] }}" class="form-control">
+        </td>
+
         </tr>
 
         <tr>
-            Contact : <input name="contact" type="text" value="{{ i['contact'] }}"><br>
+        <td>
+              Contact : <input name="contact" type="text" value="{{ i['contact'] }}" class="form-control">
+        </td>
+
         </tr>
         <tr>
-            Email : <input name="email" type="email" value="{{ i['email'] }}"><br>
+        <td>
+              Email : <input name="email" type="email" value="{{ i['email'] }}" class="form-control">
+        </td>
+
         </tr>
 {% endfor %}
 

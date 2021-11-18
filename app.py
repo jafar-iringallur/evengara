@@ -25,7 +25,7 @@ def adm_add_delivery_boy_post():
     pic = request.files['img']
     pic.save("C:\\Users\\THIS PC\\PycharmProjects\\evengara\\static\\imgs\\deliveryboy\\"+pic.filename)
     path = "/static/imgs/deliveryboy/" + pic.filename
-    qry1= "insert into login(username,password,usertype)values('"+ email +"','"+ contact +"','pending')"
+    qry1= "insert into login(username,password,usertype)values('"+ email +"','"+ contact +"','delivery_boy')"
     res1=d.insert(qry1)
 
     qry = "insert into deliveryboy(name,place,post,pin,age,email,contact,image,loginid)values('" + name + "','" + place + "','" + post + "','" + pin + "','" + age + "','" + email + "','" + contact + "','" + path + "','"+str(res1)+"')"
@@ -618,7 +618,53 @@ def shop_chat_delivery_boy_post():
 
 
 
+# andriod service
 
+@app.route('/android_login', methods=['post'])
+def android_login():
+    username = request.form['username']
+    password = request.form['password']
+
+    r = Db()
+    qry = "SELECT * FROM login WHERE username= '" + username + "' AND password = '" + password + "'"
+    res = r.selectOne(qry)
+    if res != '':
+        type = res['usertype']
+        if type == "customer":
+
+            return jsonify(status="ok", lid=res['loginid'], type=type)
+        elif type=="delivery_boy":
+
+            return jsonify(status="ok", lid=res['loginid'], type=type)
+        else:
+            return jsonify(status="no")
+    else:
+        return jsonify(status="no")
+
+@app.route('/android_signup', methods=['post'])
+def android_signup():
+    name = request.form['name']
+    place = request.form['place']
+    post = request.form['post']
+    pin = request.form['pin']
+    contact = request.form['contact']
+    email = request.form['email']
+    d = Db()
+    qry1 = "insert into login(username,password,usertype)values('" + email + "','" + contact + "','customer')"
+    res1 = d.insert(qry1)
+
+    qry = "insert into customer(name,place,post,pin,email,contact,loginid)values('" + name + "','" + place + "','" + post + "','" + pin + "','" + email + "','" + contact + "','" + str(
+        res1) + "')"
+    res = d.insert(qry)
+    return jsonify(status="ok")
+
+@app.route('/android_view_profile', methods=['post'])
+def android_view_profile():
+    c = Db()
+    lid=request.form['lid']
+    qry = "select * from customer where loginid= '" +lid+ "'"
+    res = c.selectOne(qry)
+    return jsonify(status="ok", name=res['name'],place=res['place'],post=res['post'],pin=res['pin'],contact=res['contact'],email=res['email'])
 
 if __name__ == '__main__':
     app.run(debug=True)

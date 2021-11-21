@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../static/assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../static/assets/img/favicon.png">
   <title>
-   E-Vengara Register
+    E-Vengara Register
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -36,29 +35,58 @@
                   <p class="mb-0">Enter your shop details to register</p>
                 </div>
                 <div class="card-body">
-                  <form  action="/shop_register_post" method="post" role="form">
+                  <form action="/shop_register_post" method="post" role="form" enctype="multipart/form-data">
                     <label>Shop Name</label>
                     <div class="mb-3">
-                      <input type="text" name="name"  class="form-control" placeholder="Shop Name" aria-label="Email" aria-describedby="email-addon" required>
+                      <input type="text" name="name" class="form-control" placeholder="Shop Name" aria-label="Email"
+                        aria-describedby="email-addon" required>
                     </div>
-                      <label>Address</label>
+                    <label>Address</label>
                     <div class="mb-3">
-                      <input type="text" name="address"  class="form-control" placeholder="Address" aria-label="Email" aria-describedby="email-addon" required>
+                      <input type="text" name="address" class="form-control" placeholder="Address" aria-label="Email"
+                        aria-describedby="email-addon" required>
                     </div>
-                   <label>Contact</label>
+                    <label>Contact</label>
                     <div class="mb-3">
-                      <input type="text" pattern="[0-9]{10}" name="contact"  class="form-control" placeholder="Contact" aria-label="Email" aria-describedby="email-addon" required>
+                      <input type="text" pattern="[0-9]{10}" name="contact" class="form-control" placeholder="Contact"
+                        aria-label="Email" aria-describedby="email-addon" required>
                     </div>
-                      <label>Email</label>
+                    <label>Email</label>
                     <div class="mb-3">
-                      <input type="email" name="email"  class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-addon" required>
+                      <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Email"
+                        aria-describedby="email-addon" required>
                     </div>
-
+                    <label>Shop License Number</label>
+                    <div class="mb-3">
+                      <input type="text" name="license" class="form-control" placeholder="Shop License Number"
+                        aria-label="Email" aria-describedby="email-addon" required>
+                    </div>
+                    <label>Shop Owner Name</label>
+                    <div class="mb-3">
+                      <input type="text" name="owner_name" class="form-control" placeholder="Shop Owner Name"
+                        aria-label="Email" aria-describedby="email-addon" required>
+                    </div>
+                    <label>Shop Owner Phone</label>
+                    <div class="mb-3">
+                      <input type="text" pattern="[0-9]{10}" name="owner_contact" class="form-control"
+                        placeholder="Shop Owner Phone Number" aria-label="Email" aria-describedby="email-addon"
+                        required>
+                    </div>
+                    <label>Shop Owner Aadhar Number</label>
+                    <div class="mb-3">
+                      <input type="text" pattern="[0-9]{12}" name="owner_aadhar" class="form-control"
+                        placeholder="Shop Owner Aadhar Number" aria-label="Email" aria-describedby="email-addon"
+                        required>
+                    </div>
+                    <label>Aadhar</label>
+                    <div class="mb-3">
+                      <input name="aadhar" type="file" class="form-control" required>
+                    </div>
                     <div class="text-center">
                       <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Register</button>
                     </div>
                     <br>
-                      <a href="/">login</a>
+                    <a href="/">login</a>
                   </form>
                 </div>
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
@@ -68,7 +96,8 @@
             </div>
             <div class="col-md-6">
               <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
-                <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('../static/assets/img/curved-images/curved6.jpg')"></div>
+                <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6"
+                  style="background-image:url('../static/assets/img/curved-images/curved6.jpg')"></div>
               </div>
             </div>
           </div>

@@ -90,6 +90,13 @@ def adm_view_new_shop():
     res = r.select(qry)
     return render_template("admin/view_new_shop.html", val=res)
 
+@app.route('/adm_new_shop_details/<id>')
+def adm_new_shop_details(id):
+    r = Db()
+    qry = "SELECT shop.* FROM shop where loginid= '"+id+"'"
+    res = r.select(qry)
+    return render_template("admin/new_shop_detail.html", val=res)
+
 @app.route('/adm_approve_new_shop/<id>')
 def adm_accept_new_shop(id):
     r = Db()
@@ -207,7 +214,7 @@ def adm_login_post():
     r=Db()
     qry="SELECT * FROM login WHERE username= '"+username+"' AND password = '"+password+"'"
     res= r.selectOne(qry)
-    if res != '':
+    if res != None:
         type=res['usertype']
         if type == "admin":
             return render_template("admin/index.html")
@@ -216,7 +223,8 @@ def adm_login_post():
             session['shop_id'] = res['loginid']
             return render_template("shop/index.html")
     else:
-        return 'invalid username or password'
+        return '''<script>alert("invalid username or password");window.location='/'</script>'''
+       
 
 
 
@@ -249,14 +257,22 @@ def shop_register_post():
     address= request.form['address']
     email = request.form['email']
     contact = request.form['contact']
+    license= request.form['license']
+    owner_name= request.form['owner_name']
+    owner_contact= request.form['owner_contact']
+    owner_aadhar= request.form['owner_aadhar']
+    aadhar = request.files['aadhar']
+    aadhar.save("C:\\Users\\THIS PC\\PycharmProjects\\evengara\\static\\imgs\\shop_aadhar\\"+aadhar.filename)
+    path = "/static/imgs/shop_aadhar/" + aadhar.filename
     d= Db()
+    
     qry1 = "insert into login(username,password,usertype)values('" + email + "','" + contact + "','pending')"
     res1 = d.insert(qry1)
 
-    qry = "insert into shop(name,address,email,contact,loginid)values('" + name + "','" + address + "','" + email + "','" + contact + "','" + str(
-        res1) + "')"
+    qry = "insert into shop(name,address,email,contact,loginid,license,owner_name,owner_contact,owner_aadhar,aadhar)values('" + name + "','" + address + "','" + email + "','" + contact + "','" + str(
+        res1) + "','" + license + "','" + owner_name + "','" + owner_contact + "','" + owner_aadhar + "','" + path + "')"
     res = d.insert(qry)
-    return shop()
+    return adm_login()
 
 @app.route('/shop_change_password')
 def adm_shop_password():
@@ -628,16 +644,10 @@ def android_login():
     r = Db()
     qry = "SELECT * FROM login WHERE username= '" + username + "' AND password = '" + password + "'"
     res = r.selectOne(qry)
-    if res != '':
+    
+    if res !=None:
         type = res['usertype']
-        if type == "customer":
-
-            return jsonify(status="ok", lid=res['loginid'], type=type)
-        elif type=="delivery_boy":
-
-            return jsonify(status="ok", lid=res['loginid'], type=type)
-        else:
-            return jsonify(status="no")
+        return jsonify(status="ok", lid=res['loginid'], type=type)
     else:
         return jsonify(status="no")
 
@@ -667,4 +677,4 @@ def android_view_profile():
     return jsonify(status="ok", name=res['name'],place=res['place'],post=res['post'],pin=res['pin'],contact=res['contact'],email=res['email'])
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,host='0.0.0.0')

@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9b00d7b6-ec5a-4f2d-b5c7-1aa14d1497e9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/view_accepted_shop.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/view_accepted_shop.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/shop/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shop/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -111,6 +109,7 @@
       <workItem from="1634040168029" duration="1032000" />
       <workItem from="1635601340175" duration="206000" />
       <workItem from="1637240532387" duration="1594000" />
+      <workItem from="1637243969734" duration="867000" />
     </task>
     <servers />
   </component>
@@ -131,6 +130,6 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/evengara$evengara.coverage" NAME="evengara Coverage Results" MODIFIED="1637240630570" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/evengara$evengara.coverage" NAME="evengara Coverage Results" MODIFIED="1637244070869" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

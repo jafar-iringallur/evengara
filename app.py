@@ -1,4 +1,5 @@
 from flask import Flask,render_template,request,session,jsonify
+from flask.wrappers import Request
 from DBConnection import Db
 app = Flask(__name__)
 app.secret_key="abcc"
@@ -591,7 +592,7 @@ def adm_chat_deliveryboy_post():
     return render_template('admin/chat.html',val=res,toid=id)
 
 
-#=====================================shop to deliveryboy===================================================
+#=====================================shop to deliveryboy chat===================================================
 @app.route("/shop_virew_delivery_boy")
 def view_delivery_boy():
     r = Db()
@@ -675,6 +676,101 @@ def android_view_profile():
     qry = "select * from customer where loginid= '" +lid+ "'"
     res = c.selectOne(qry)
     return jsonify(status="ok", name=res['name'],place=res['place'],post=res['post'],pin=res['pin'],contact=res['contact'],email=res['email'])
+
+@app.route("/android_view_shops",methods=['POST'])
+def android_view_shops():
+    qry = "select * from shop"
+    d=Db()
+    res = d.select(qry)
+    return jsonify(status="ok",data=res)
+
+@app.route("/android_view_shops_product",methods=['POST'])
+def android_view_shops_product():
+    shopid=request.form["shopid"]
+    qry = "select * from products where shopid='"+shopid+"'"
+    print(qry)
+    d=Db()
+    res = d.select(qry)
+    print(res)
+    return jsonify(status="ok",data=res)
+
+@app.route('/android_shop_details', methods=['post'])
+def android_shop_details():
+    c = Db()
+    lid=request.form['lid']
+    qry = "select * from shop where loginid= '" +lid+ "'"
+    res = c.selectOne(qry)
+    qry1="SELECT AVG(`rating`) FROM `review` WHERE `id`='"+lid+"'"
+    rr=c.selectOne(qry1)
+    if rr is not None:
+        rat=float(rr["AVG(`rating`)"])
+    else:
+        rat=0
+ 
+    qry2="SELECT review.*,customer.name AS cname FROM review,customer WHERE customer.loginid = review.userid AND review.id='"+lid+"' AND review.type='shop'"
+    res2=c.select(qry2)
+    
+    return jsonify(status="ok",rat=str(rat), name=res['name'],address=res['address'],contact=res['contact'],email=res['email'],review=res2)
+
+@app.route('/android_product_details', methods=['post'])
+def android_product_details():
+    c = Db()
+    prdid=request.form['prdid']
+    qry = "select * from products where prdid= '" +prdid+ "'"
+    res = c.selectOne(qry)
+    return jsonify(status="ok", name=res['name'],image=res['image'],description=res['description'],price=res['price'],made_date=res['madedate'],exp_date=res['expdate'])
+
+@app.route('/android_add_cart', methods=['post'])
+def android_add_cart():
+    c = Db()
+    
+    uid=request.form['uid']
+    pid=request.form['pid']
+    qty=request.form['qty']
+    qry="insert into cart(uid,pid,qty) values('"+uid+"','"+pid+"','"+qty+"')"
+    res=c.insert(qry)
+    return jsonify(status="ok")
+    
+@app.route("/android_view_cart",methods=['POST'])
+def android_view_cart():
+    uid=request.form["lid"]
+    qry = "select cart.*,products.*,qty*price as total from cart,products where cart.uid='"+uid+"' and cart.pid=products.prdid"
+    print(qry)
+    d=Db()
+    res = d.select(qry)
+    print(res)
+    return jsonify(status="ok",data=res)
+
+@app.route("/android_remove_cart",methods=['POST'])
+def android_remove_cart():
+    cartid=request.form["cartid"]
+    d=Db()
+    qry = "delete from cart where cartid='"+cartid+"'"
+    res= d.delete(qry)
+    return jsonify(status="ok")
+
+@app.route('/android_update_profile', methods=['post'])
+def android_update_profile():
+    name = request.form['name']
+    place = request.form['place']
+    post = request.form['post']
+    pin = request.form['pin']
+    contact = request.form['contact']
+    email = request.form['email']
+    lid = request.form['lid']
+
+    c = Db()
+    qry="UPDATE customer SET name ='"+name+"', place ='"+place+"', post ='"+post+"', pin='"+pin+"', contact ='"+contact+"', email ='"+email+"' where loginid='"+lid+"'"
+    res= c.update(qry);
+    return jsonify(status="ok")
+
+@app.route('/android_order', methods=['post'])
+def android_order():
+    c= Db()
+    
+    
+   
+    
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0')

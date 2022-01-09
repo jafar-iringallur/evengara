@@ -240,7 +240,7 @@ def adm_view_order():
 @app.route('/adm_view_items/<id>')
 def adm_view_item(id):
     d= Db()
-    qry=("select ordersub.*,products.*,shop.name as shop_name from ordersub,products,shop where ordersub.ordermainid='"+id+"' and ordersub.shopid=shop.loginid AND products.prdid=ordersub.productid")
+    qry=("select ordersub.*,products.*,shop.name as shop_name from ordersub,products,shop where ordersub.ordermainid='"+id+"' and products.shopid=shop.loginid AND products.prdid=ordersub.productid")
     res=d.select(qry)
     return render_template("admin/view_item.html",val=res)
 
@@ -751,25 +751,142 @@ def android_remove_cart():
 
 @app.route('/android_update_profile', methods=['post'])
 def android_update_profile():
+    
+
+    c = Db()
+    qry="UPDATE customer SET name ='"+name+"', place ='"+place+"', post ='"+post+"', pin='"+pin+"', contact ='"+contact+"', email ='"+email+"' where loginid='"+lid+"'"
+    res= c.update(qry)
+    return jsonify(status="ok")
+
+
+@app.route('/android_order', methods=['post'])
+def android_order():
+    c= Db()
     name = request.form['name']
     place = request.form['place']
     post = request.form['post']
     pin = request.form['pin']
     contact = request.form['contact']
-    email = request.form['email']
+    acc_no=request.form['acc_no']
+    password=request.form['pass']
     lid = request.form['lid']
+    
+    sumtotal=request.form['sumtotal']
 
+    qry = "SELECT * FROM bank WHERE accno= '" + acc_no + "' AND password = '" + password + "' and balance >'"+sumtotal+"'"
+    print(qry)
+    re = c.selectOne(qry)
+
+    if re is not None:
+        qr="select * from cart where uid='"+lid+"'"
+        res=c.select(qr)
+        print(res)
+        if len(res)!=0:
+            print("1")
+            status='pending'
+
+            qry1= "insert into ordermain(date,time,status,total,userid)values(CURDATE(),CURTIME(),'"+status+"','"+sumtotal+"','"+lid+"')"
+            res1=c.insert(qry1)
+
+            for i in res:
+                q="select shopid from products where prdid='"+str(i['pid'])+"'"
+                r=c.selectOne(q)
+                qry2= "insert into ordersub(ordermainid,productid,quantity,shopid)values('" + str(res1) + "','"+str(i['pid'])+"','"+str(i['qty'])+"','"+str(r['shopid'])+"')"
+                res2=c.insert(qry2)
+       
+            sql="insert into delivery_address(o_id,name,place,post,pin,contact)values('"+ str(res1) +"','"+name+"','"+place+"','"+post+"','"+pin+"','"+contact+"')"
+            result=c.insert(sql)
+            qry3="delete from cart where uid='"+lid+"'"
+            res3=c.delete(qry3)
+            qry4="insert into payment(order_id,date,status)values('"+str(res1)+"',CURDATE(),'success')"
+            res4=c.insert(qry4)
+
+            qry5="UPDATE bank SET balance = balance-'"+sumtotal+"' WHERE accno='"+acc_no+"'"
+            res5=c.update(qry5)
+           
+            
+
+
+
+            return jsonify(status="ok",oid=str(res1))
+
+        
+        
+        else:
+            print("2")
+            return jsonify(status="no")
+
+    else:
+        print("3")
+        return jsonify(status="no")
+
+@app.route('/android_view_order_main', methods=['post'])
+def android_view_order_main():
+    c= Db()
+    lid=request.form['lid']
+    qry="select * from ordermain where userid='"+lid+"'"
+    res=c.select(qry)
+    return jsonify(status="ok",data=res)
+
+
+@app.route('/android_view_order_sub', methods=['post'])
+def android_view_order_sub():
+    c=Db()
+    oid= request.form['oid']
+    qry="select ordersub.*,products.* from ordersub,products where ordermainid='"+oid+"' and ordersub.productid=products.prdid"
+    res=c.select(qry)
+    return jsonify(status="ok",data=res)
+
+# ANDROID DLIVERY BOY
+
+@app.route('/android_boy_view_profile', methods=['post'])
+def android_boy_view_profile():
     c = Db()
-    qry="UPDATE customer SET name ='"+name+"', place ='"+place+"', post ='"+post+"', pin='"+pin+"', contact ='"+contact+"', email ='"+email+"' where loginid='"+lid+"'"
-    res= c.update(qry);
+    lid=request.form['lid']
+    qry = "select * from deliveryboy where loginid= '" +lid+ "'"
+    res = c.selectOne(qry)
+    return jsonify(status="ok", name=res['name'],place=res['place'],post=res['post'],pin=res['pin'],contact=res['contact'],email=res['email'],age=res['age'],image=res['image'])
+
+
+
+@app.route('/android_boy_view_order', methods=['post'])
+def android_boy_view_order():
+    c= Db()
+    lid=request.form['lid']
+    qry="SELECT ordermain.*,customer.name as customer FROM ordermain,customer WHERE boy_id ='"+lid+"' AND ordermain.userid=customer.loginid"
+    res=c.select(qry)
+    return jsonify(status="ok",data=res)
+
+@app.route('/android_boy_view_order_detail', methods=['post'])
+def android_boy_view_order_detail():
+    c= Db()
+    oid=request.form['oid']
+    qry="select ordersub.*,products.name,price from ordersub,products where ordersub.ordermainid='"+oid+"' and ordersub.productid=products.prdid"
+    res=c.select(qry)
+    q="select * from delivery_address where o_id ='"+oid+"'"
+    re=c.selectOne(q)
+
+    
+    return jsonify(status="ok",data=res,re=re)
+
+
+@app.route('/android_boy_update_order', methods=['post'])
+def android_boy_update_order():
+    c= Db()
+    oid=request.form['oid']
+    qry="update ordermain set status='success' where ordermainid='"+oid+"'"
+    res=c.update(qry)
+    
     return jsonify(status="ok")
 
-@app.route('/android_order', methods=['post'])
-def android_order():
+@app.route('/android_boy_search_order', methods=['post'])
+def android_boy_search_order():
     c= Db()
-    
-    
-   
+    search=request.form['search']
+    lid=request.form['lid']
+    qry="SELECT ordermain.*,customer.name as customer FROM ordermain,customer WHERE boy_id ='"+lid+"' AND ordermain.userid=customer.loginid and ordermain.ordermainid LIKE '%"+search+"%'"
+    res=c.select(qry)
+    return jsonify(status="ok",data=res)
     
 
 if __name__ == '__main__':

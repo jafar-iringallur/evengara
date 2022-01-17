@@ -1,3 +1,5 @@
+from email import message
+import re
 from flask import Flask,render_template,request,session,jsonify
 from flask.wrappers import Request
 from DBConnection import Db
@@ -494,6 +496,43 @@ def shop_view_item(id):
     return render_template("shop/view_item.html",val=res)
 
 
+
+@app.route("/adm_chat_customer/<id>")
+def adm_chat_customer(id):
+    d=Db()
+    session['toid']=id
+    qry="select * from customer where loginid='"+id+"'"
+    res=d.selectOne(qry)
+    return render_template("admin/chat_customer.html",val=res,toid=session['toid'])
+
+@app.route("/adm_chat_customer_chk",methods=['post'])        # refresh messages chatlist
+def adm_chat_customer_chk():
+    toid=request.form['toid']
+    qry = "SELECT DATE,message,senderid FROM chat WHERE (senderid='" +toid+ "' AND reciverid=1) OR ((senderid=1 AND reciverid='" +toid+ "')) ORDER BY chatid DESC"
+    c=Db()
+
+    res = c.select(qry)
+
+    return jsonify(res)
+
+
+
+@app.route("/adm_chat_customer_post",methods=['POST'])
+def adm_chat_customer_post():
+    id=request.form['hid']
+    myloginid=1
+    ta=request.form["ta"]
+    qry="insert into chat(message,date,time,senderid,reciverid,type) values('"+ta+"',CURDATE(),CURTIME(),'"+str(myloginid)+"','"+str(id)+"','customer')"
+    d=Db()
+    d.insert(qry)
+    qry = "select * from customer where loginid='" + id + "'"
+    res = d.selectOne(qry)
+    return render_template('admin/chat_customer.html',val=res,toid=id)
+
+
+
+
+
 #======================= admin chat with shop====================================================
 @app.route("/adm_chat/<id>")
 def adm_chat(id):
@@ -684,6 +723,15 @@ def android_view_shops():
     res = d.select(qry)
     return jsonify(status="ok",data=res)
 
+@app.route("/android_search_shop",methods=['POST'])
+def android_search_shops():
+    search=request.form['search']
+    qry = "select * from shop where name  LIKE '%"+search+"%'"
+    d=Db()
+    res = d.select(qry)
+    return jsonify(status="ok",data=res)
+
+
 @app.route("/android_view_shops_product",methods=['POST'])
 def android_view_shops_product():
     shopid=request.form["shopid"]
@@ -694,31 +742,100 @@ def android_view_shops_product():
     print(res)
     return jsonify(status="ok",data=res)
 
+@app.route("/android_search_shops_product",methods=['POST'])
+def android_search_shops_product():
+    search=request.form['search']
+    shopid=request.form["shopid"]
+    qry = "select * from products where shopid='"+shopid+"' and name  LIKE '%"+search+"%'"
+    print(qry)
+    d=Db()
+    res = d.select(qry)
+    print(res)
+    return jsonify(status="ok",data=res)
+
+
+@app.route("/android_view_all_product",methods=['POST'])
+def android_view_all_product():
+    shopid=request.form["shopid"]
+    qry = "select products.*,shop.name as shop from products,shop where products.shopid=shop.loginid"
+    print(qry)
+    d=Db()
+    res = d.select(qry)
+    print(res)
+    return jsonify(status="ok",data=res)
+
+@app.route("/android_search_all_product",methods=['POST'])
+def android_search_all_product():
+    search=request.form['search']
+    shopid=request.form["shopid"]
+    qry = "select products.*,shop.name as shop from products,shop where products.shopid=shop.loginid and products.name  LIKE '%"+search+"%'"
+    print(qry)
+    d=Db()
+    res = d.select(qry)
+    print(res)
+    return jsonify(status="ok",data=res)
+
+
 @app.route('/android_shop_details', methods=['post'])
 def android_shop_details():
     c = Db()
     lid=request.form['lid']
+    type=request.form['type']
     qry = "select * from shop where loginid= '" +lid+ "'"
     res = c.selectOne(qry)
-    qry1="SELECT AVG(`rating`) FROM `review` WHERE `id`='"+lid+"'"
+    qry1="SELECT AVG(`rating`) FROM `review` WHERE `id`='"+lid+"' and `type`='"+type+"'"
+    
     rr=c.selectOne(qry1)
-    if rr is not None:
+    print(rr)
+    if rr["AVG(`rating`)"] is not None:
         rat=float(rr["AVG(`rating`)"])
     else:
         rat=0
  
-    qry2="SELECT review.*,customer.name AS cname FROM review,customer WHERE customer.loginid = review.userid AND review.id='"+lid+"' AND review.type='shop'"
+    qry2="SELECT review.*,customer.name AS cname FROM review,customer WHERE customer.loginid = review.userid AND review.id='"+lid+"' AND review.type='"+type+"'"
     res2=c.select(qry2)
-    
+   
     return jsonify(status="ok",rat=str(rat), name=res['name'],address=res['address'],contact=res['contact'],email=res['email'],review=res2)
+
+@app.route('/android_send_review', methods=['post'])
+def android_send_review():
+    c = Db()
+    review=request.form['review']
+    rating=request.form['rating']
+    user=request.form['lid']
+    id=request.form['id']
+    type=request.form['type']
+    qr="select * from review where userid='"+user+"' and type='"+type+"' and id='"+id+"'"
+    re=c.selectOne(qr)
+    if re == None:
+        qry="insert into review(review,rating,userid,date,type,id)values('"+review+"','"+rating+"','"+user+"',CURDATE(),'"+type+"','"+id+"')"
+        res=c.insert(qry)
+        return jsonify(status="ok")
+
+    return jsonify(status="no")
+
 
 @app.route('/android_product_details', methods=['post'])
 def android_product_details():
     c = Db()
     prdid=request.form['prdid']
-    qry = "select * from products where prdid= '" +prdid+ "'"
+    type=request.form['type']
+
+    qry = "select products.*,shop.name as shop from products,shop where products.prdid= '" +prdid+ "' and products.shopid=shop.loginid"
     res = c.selectOne(qry)
-    return jsonify(status="ok", name=res['name'],image=res['image'],description=res['description'],price=res['price'],made_date=res['madedate'],exp_date=res['expdate'])
+    qry1="SELECT AVG(`rating`) FROM `review` WHERE `id`='"+prdid+"' and `type`='"+type+"'"
+    
+    rr=c.selectOne(qry1)
+    if rr["AVG(`rating`)"] is not None:
+        rat=float(rr["AVG(`rating`)"])
+    else:
+        rat=0
+ 
+    
+    qry2="SELECT review.*,customer.name AS cname FROM review,customer WHERE customer.loginid = review.userid AND review.id='"+prdid+"' AND review.type='"+type+"'"
+    
+    res2=c.select(qry2)
+    return jsonify(status="ok",rat=str(rat), name=res['name'],shop=res['shop'],image=res['image'],description=res['description'],price=res['price'],made_date=res['madedate'],exp_date=res['expdate'],review=res2)
 
 @app.route('/android_add_cart', methods=['post'])
 def android_add_cart():
@@ -734,7 +851,7 @@ def android_add_cart():
 @app.route("/android_view_cart",methods=['POST'])
 def android_view_cart():
     uid=request.form["lid"]
-    qry = "select cart.*,products.*,qty*price as total from cart,products where cart.uid='"+uid+"' and cart.pid=products.prdid"
+    qry = "SELECT cart.*,products.*,shop.name AS shop,qty*price AS total FROM cart,products,shop WHERE cart.uid='"+uid+"' AND cart.pid=products.prdid AND products.shopid=shop.loginid"
     print(qry)
     d=Db()
     res = d.select(qry)
@@ -798,7 +915,7 @@ def android_order():
             result=c.insert(sql)
             qry3="delete from cart where uid='"+lid+"'"
             res3=c.delete(qry3)
-            qry4="insert into payment(order_id,date,status)values('"+str(res1)+"',CURDATE(),'success')"
+            qry4="insert into payment(order_id,date,status,type)values('"+str(res1)+"',CURDATE(),'success','Online')"
             res4=c.insert(qry4)
 
             qry5="UPDATE bank SET balance = balance-'"+sumtotal+"' WHERE accno='"+acc_no+"'"
@@ -820,11 +937,80 @@ def android_order():
         print("3")
         return jsonify(status="no")
 
+
+# 8888888888888888888888888888888888888
+
+
+
+
+@app.route('/android_order_cod', methods=['post'])
+def android_order_cod():
+    c= Db()
+    name = request.form['name']
+    place = request.form['place']
+    post = request.form['post']
+    pin = request.form['pin']
+    contact = request.form['contact']
+    # acc_no=request.form['acc_no']
+    # password=request.form['pass']
+    lid = request.form['lid']
+    
+    sumtotal=request.form['sumtotal']
+
+    # qry = "SELECT * FROM bank WHERE accno= '" + acc_no + "' AND password = '" + password + "' and balance >'"+sumtotal+"'"
+    # print(qry)
+    # re = c.selectOne(qry)
+
+    # if re is not None:
+    qr="select * from cart where uid='"+lid+"'"
+    res=c.select(qr)
+    print(res)
+    if len(res)!=0:
+        print("1")
+        status='pending'
+
+        qry1= "insert into ordermain(date,time,status,total,userid)values(CURDATE(),CURTIME(),'"+status+"','"+sumtotal+"','"+lid+"')"
+        res1=c.insert(qry1)
+
+        for i in res:
+            q="select shopid from products where prdid='"+str(i['pid'])+"'"
+            r=c.selectOne(q)
+            qry2= "insert into ordersub(ordermainid,productid,quantity,shopid)values('" + str(res1) + "','"+str(i['pid'])+"','"+str(i['qty'])+"','"+str(r['shopid'])+"')"
+            res2=c.insert(qry2)
+    
+        sql="insert into delivery_address(o_id,name,place,post,pin,contact)values('"+ str(res1) +"','"+name+"','"+place+"','"+post+"','"+pin+"','"+contact+"')"
+        result=c.insert(sql)
+        qry3="delete from cart where uid='"+lid+"'"
+        res3=c.delete(qry3)
+        qry4="insert into payment(order_id,date,status,type)values('"+str(res1)+"',CURDATE(),'pending','COD')"
+        res4=c.insert(qry4)
+
+        # qry5="UPDATE bank SET balance = balance-'"+sumtotal+"' WHERE accno='"+acc_no+"'"
+        # res5=c.update(qry5)
+        
+        
+
+
+
+        return jsonify(status="ok",oid=str(res1))
+
+        
+        
+    else:
+        print("2")
+        return jsonify(status="no")
+
+    
+
+
+
+
+
 @app.route('/android_view_order_main', methods=['post'])
 def android_view_order_main():
     c= Db()
     lid=request.form['lid']
-    qry="select * from ordermain where userid='"+lid+"'"
+    qry="select ordermain.*,payment.type from ordermain,payment where userid='"+lid+"' AND ordermain.ordermainid=payment.order_id ORDER BY ordermain.ordermainid DESC"
     res=c.select(qry)
     return jsonify(status="ok",data=res)
 
@@ -833,10 +1019,43 @@ def android_view_order_main():
 def android_view_order_sub():
     c=Db()
     oid= request.form['oid']
-    qry="select ordersub.*,products.* from ordersub,products where ordermainid='"+oid+"' and ordersub.productid=products.prdid"
+    qry="select ordersub.*,products.*,shop.name as shop from ordersub,products,shop where ordermainid='"+oid+"' and ordersub.productid=products.prdid and products.shopid=shop.loginid"
     res=c.select(qry)
     return jsonify(status="ok",data=res)
 
+
+@app.route('/android_return_order', methods=['post'])
+def android_return_order():
+    c=Db()
+    oid= request.form['oid']   
+    qry="update ordersub set status='return' where ordersubid='"+oid+"'" 
+    res=c.update(qry)
+    return jsonify(status="ok")
+
+@app.route('/android_chat_send', methods=['post'])
+def android_chat_send():
+    message=request.form['message']
+    sender=request.form['lid']
+    c=Db()
+    qry="insert into chat(message,date,time,senderid,reciverid,type) values('"+message+"',CURDATE(),CURTIME(),'"+sender+"','1','customer')"
+    res=c.insert(qry)
+    return jsonify(status="ok")
+
+@app.route('/android_chat_fetch', methods=['post'])
+def android_chat_fetch():
+    toid=request.form['lid']
+    lastid=request.form['lastmsgid']
+
+    qry = "SELECT * FROM chat WHERE ((senderid='1' AND reciverid='"+toid+"') OR (senderid='"+toid+"' AND reciverid='1')) AND type='customer' and chatid>"+lastid+" ORDER BY chatid ASC"
+    c = Db()
+
+    res = c.select(qry)
+    print(res)
+    return jsonify(status="ok",res1=res)
+
+
+
+  
 # ANDROID DLIVERY BOY
 
 @app.route('/android_boy_view_profile', methods=['post'])
@@ -887,6 +1106,7 @@ def android_boy_search_order():
     qry="SELECT ordermain.*,customer.name as customer FROM ordermain,customer WHERE boy_id ='"+lid+"' AND ordermain.userid=customer.loginid and ordermain.ordermainid LIKE '%"+search+"%'"
     res=c.select(qry)
     return jsonify(status="ok",data=res)
+
     
 
 if __name__ == '__main__':
